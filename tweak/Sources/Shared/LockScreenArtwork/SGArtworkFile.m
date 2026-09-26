@@ -57,6 +57,29 @@ void SGArtworkCancelFetch(void) {
     [task cancel];
 }
 
+// The file a clip is kept under, whether it is there or not.
+static NSURL *stored(NSString *identifier) {
+    return fileFor([identifier stringByAppendingPathExtension:@"mp4"]);
+}
+
+void SGArtworkClip(NSString *identifier, NSString *address, void (^done)(NSURL *file, NSString *note)) {
+    if (!identifier.length) {
+        done(nil, @"no identifier");
+        return;
+    }
+    NSURL *local = stored(identifier);
+    if ([NSFileManager.defaultManager fileExistsAtPath:local.path]) {
+        dispatch_async(queue(), ^{ touch(local); });
+        done(local, @"on disk");
+        return;
+    }
+    if (sg_task) {
+        done(nil, @"another clip is being fetched");
+        return;
+    }
+    SGArtworkFetch(identifier, address, done);
+}
+
 void SGArtworkFetch(NSString *identifier, NSString *address, void (^done)(NSURL *file, NSString *note)) {
     SGArtworkCancelFetch();
     NSURL *remote = address.length ? [NSURL URLWithString:address] : nil;
@@ -64,7 +87,7 @@ void SGArtworkFetch(NSString *identifier, NSString *address, void (^done)(NSURL 
         done(nil, @"no address");
         return;
     }
-    NSURL *local = fileFor([identifier stringByAppendingPathExtension:@"mp4"]);
+    NSURL *local = stored(identifier);
     if ([NSFileManager.defaultManager fileExistsAtPath:local.path]) {
         dispatch_async(queue(), ^{ touch(local); });
         done(local, @"cached");

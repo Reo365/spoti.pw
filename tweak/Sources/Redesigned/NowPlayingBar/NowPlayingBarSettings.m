@@ -12,6 +12,9 @@ UIViewController *SGRNowPlayingBarSettingsPage(void) {
         ]),
         SGSection(nil, @[
             SGSwitchRow(@"Moving background", nil, SGRKeyPlayerMotion),
+            SGOptionRow(@"Cover animation", @"Plays the album's animation on the cover, the way the Music app does. "
+                        @"It is the clip the lock screen's animated artwork has already fetched, and it starts with the next track.",
+                        SGRKeyCoverMotion),
         ]),
     ] footer:nil];
 }

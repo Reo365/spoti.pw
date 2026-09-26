@@ -82,6 +82,12 @@ UIView *SGRPlayerCoverList(void) {
     return nil;
 }
 
+// The cover on screen as a view, for a layer to be laid over it (PlayerMotion.x). CGRectNull's
+// counterpart: nil until a cover has laid out, and the cover of whichever cell the list has moved to.
+UIView *SGRPlayerCoverView(void) {
+    return coverIn(showingTilt());
+}
+
 CGRect SGRPlayerCoverFrameIn(UIView *host) {
     UIView *tilt = showingTilt();
     UIView *cover = coverIn(tilt);

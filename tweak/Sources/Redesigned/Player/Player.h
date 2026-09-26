@@ -7,6 +7,7 @@
 //
 //     PlayerField.x      the switch's flags and rows, the field in the background plane, the cover it reads
 //     PlayerArtwork.x    the cover's corners, shadow and paused shrink, the lyric preview under it hidden
+//     PlayerMotion.x     the album's animation played on the cover, off until it is asked for
 //     PlayerHeader.x     glass behind the close and more buttons
 //     PlayerControls.x   previous, play and next as bare glyphs, monospaced times
 //     PlayerFooter.x     share gone, lyrics, Connect and queue as one row of three glyphs
@@ -28,6 +29,11 @@
 // The artwork's colours moving behind the player (on until switched off), or the blurred artwork held
 // still; the row is on the Now playing page (Redesigned/NowPlayingBar/NowPlayingBarSettings.m).
 #define SGRKeyPlayerMotion @"spotifyglass.redesign.player.movingBackground"
+// The album's animation played on the cover, off until it is asked for and read on every track, so it
+// applies to the next one. The clip is the one the lock screen's animated artwork has already fetched
+// (Shared/LockScreenArtwork); an album with no clip keeps its still cover. The row is on the Now
+// playing page too.
+#define SGRKeyCoverMotion @"spotifyglass.redesign.player.coverMotion"
 
 // The field behind the player, nil until the player has laid out once (PlayerField.x).
 SGRArtworkField *SGRPlayerField(void);
@@ -36,6 +42,9 @@ SGRArtworkField *SGRPlayerField(void);
 
 // The sideways list of covers behind the player, nil until one has laid out.
 UIView *SGRPlayerCoverList(void);
+// The cover on screen as a view, for a layer to be laid over it (PlayerMotion.x); nil until a cover
+// has laid out, and the cover of whichever cell the list has moved to.
+UIView *SGRPlayerCoverView(void);
 // The cover on screen as it is drawn, its paused shrink included, in `host`'s coordinates; CGRectNull
 // when no cover has laid out.
 CGRect SGRPlayerCoverFrameIn(UIView *host);

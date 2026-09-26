@@ -170,7 +170,10 @@ Redesigned:
     NowPlayingBar/ the glass now playing bar (NowPlayingBar.x), with Spotify's device button on it hidden on request
                   (BarConnect.x, its own key and its own Now playing page, apart from the native look's)
     Player/       the redesigned full screen player (Player.h lists its files); its more button is handed to
-                  Shared/Player's Speed and pitch, which draws in the menu it opens
+                  Shared/Player's Speed and pitch, which draws in the menu it opens. The cover plays the album's
+                  animation on request (PlayerMotion.x), on the clip Shared/LockScreenArtwork has fetched, laid on the
+                  cover as a layer, muted and looped, fading in over the still cover once it has a frame to show; it
+                  reads its switch on every track, so it starts with the next one
     Lyrics/       the full screen lyrics page on glass with Apple Music style lyrics over it, always on (SGRKaraokeView,
                   which the player shows in itself too, Player/PlayerLyrics.x): lines sung over each other lit together,
                   the stack moving on once the first is sung out; an instrumental break of 7 s or more held by three dots
@@ -261,7 +264,7 @@ which of the lyrics, their pronunciation and their translation is set largest, a
 in the native look also Now playing bar (its device button and its flags), Queue & devices, and
 Spotify's own player screen (artwork background, glass header buttons, Disable Canvas and the sheet,
 header, slider and sticky header flags, the cards under the player and the lyrics preview and player
-buttons to hide); in the redesign instead Now playing (its device button). Then Vibrations under either look, a card for
+buttons to hide); in the redesign instead Now playing (its device button, and the cover's animation). Then Vibrations under either look, a card for
 Controls (on until switched off) and one for Music Haptics (off until switched on, with an ⓘ saying it
 follows the sound this iPhone plays while Spotify is open), each opening out while its switch is on:
 Controls into its Strength (10 to 100%, a tap at the new strength with each step), Music Haptics into its
